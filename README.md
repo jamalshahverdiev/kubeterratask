@@ -1,3 +1,3 @@
-- [Prepare Tomcat docker image with app itself and use it](https://github.com/jamalshahverdiev/dockerpythontask/tree/master/pythondockerapp)
-- [Prepare Nginx docker image with app itself and use it](https://github.com/jamalshahverdiev/dockerpythontask/tree/master/godockerapp)
-- [Use Kubernetes Yaml files to deploy our app to the cluster via Nginx Ingress](https://github.com/jamalshahverdiev/dockerpythontask/tree/master/kubefiles)
+- [Prepare Tomcat docker image with app itself and use it](https://github.com/jamalshahverdiev/kubeterratask/tree/master/tomcat)
+- [Prepare Nginx docker image with app itself and use it](://github.com/jamalshahverdiev/kubeterratask/tree/master/nginx)
+- [Use Kubernetes Yaml files to deploy our apps to the cluster via Nginx Ingress](https://github.com/jamalshahverdiev/kubeterratask/tree/master/kubefiles)
