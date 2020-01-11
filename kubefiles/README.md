@@ -1,5 +1,4 @@
-
-##### If you want to deploy Python app inside of the Kubernetes cluster first of all we must prepate nginx ingress controller itself. By default `kube-apiserver` port ragne is between `30000 - 32767`. If we want to expose needed port to our worker nodes we must change this range. That is why inside of the master nodes we will edit `/etc/kubernetes/manifests/kube-apiserver.yaml` file and add `- --service-node-port-range=1-32767` line to change port range. 
+##### If you want to deploy applocations inside of the Kubernetes cluster first of all we must prepate nginx ingress controller itself. By default `kube-apiserver` port ragne is between `30000 - 32767`. If our purpose to expose port 80 and 443 to our worker nodes and use a lot of applications with the different DNS names (Like as VirtualHost) then, we must change this range. That is why inside of the master nodes we will edit `/etc/kubernetes/manifests/kube-apiserver.yaml` file and add `- --service-node-port-range=1-32767` line to change port range. 
 `Note:` We must restart `kube-apiserver` services in the master nodes.
 
 ##### Create new `namespace` for our Ingress controller
@@ -31,32 +30,41 @@ $ kubectl create -f nginx-ingress-controller-deployment.yaml -n=ingress
 $ kubectl create -f nginx-ingress.yaml -n=ingress
 ``` 
 
-##### Create our python app with the following command (It will create `pythonapp` deployment with the selection of `pythonapp` conatiner and with the 3 pod replicas. Then it will create the service with name `python-service` which matchs to the created deployment `pythonapp`):
-```bash
-$ kubectl create -f pythondockerpod.yaml
-```
-
-`Note:` To use `nginxingress.loc` DNS name we must add new zone to our DNS server with the `A` records for our worker nodes. Otherwise we must add DNS name with the IP addresses of worker nodes to the `c:\windows\system32\drivers\etc\hosts`(For the windows Desktop) or `/etc/hosts` (For the Linux Desktop file) file.
-
-##### Create new `python-ingress` Ingress with name which matchs to our `python-service` service which listen on the port `8080`. As the external DNS name we must use `nginxingress.loc`.
-```bash
-$ kubectl create -f pythoningress.yaml
-```
-
-`Note:` If you want use GoAPP inside of the Kubernetes cluster, just execute `kubectl create -f godockerpod.yaml` and `kubectl create -f goingress.yaml` commands.
-
 ##### At the end just execute the following command to create service with name `nginx-ingress` which exposes port `80` to our ingress controller which mapped our ingress rule in the port `8080`.
 ```bash
 $ kubectl create -f nginx-ingress-controller-service.yaml -n=ingress
 ```
 
+##### Create our nginx app with the following command (It will create `ngapp` deployment with the selection of `ngapp` conatiner and with the 3 pod replicas. Then it will create the service with name `ngapp-service` which matchs to the created deployment `ngapp`):
+```bash
+$ kubectl create -f ngapp.yaml
+```
+
+`Note:` To use `ngappingress.loc` and `tv8appingress.loc` DNS names (which defined in the `ngappingress.yaml` for nginx and `tv8appingress.yaml` file for the tomcat application) we must add new zones to our DNS server with the `A` records for our worker nodes. Otherwise we must add DNS name with the IP addresses of worker nodes to the `c:\windows\system32\drivers\etc\hosts`(For the windows Desktop) or `/etc/hosts` (For the Linux Desktop file) file.
+
+##### Create new `ngapp-ingress` Ingress with name which matchs to our `ngapp-service` service which listen on the port `80`. As the external DNS name we must use `ngappingress.loc`.
+```bash
+$ kubectl create -f ngappingress.yaml
+```
+
+`Note:` If you want use Tomcat app inside of the Kubernetes cluster, just execute `kubectl create -f tv8pod.yaml` and `kubectl create -f tv8appingress.yaml` commands. I have used DNS name `tv8appingress.loc`
+
 ##### Result must be like as the following:
 ```bash
-$ curl -XGET http://nginxingress.loc/
-Success!
-$ curl -XGET http://nginxingress.loc/ping
-Ok
+$ curl -XGET http://ngappingress.loc/
+<html>
+<center>
+    <h1>
+        Hello World.
+    </h1>
+</center>
+</html>
+
+$ curl -s -XGET http://tv8appingress.loc/sample/ | head -n3 | tail -n1
+<title>Sample "Hello, World" Application</title>
 ```
 
 ##### Or:
-![RESULT](images/RESULT.PNG)
+![RESULT](images/ngapp.PNG)
+
+![RESULT](images/tv8app.PNG)
