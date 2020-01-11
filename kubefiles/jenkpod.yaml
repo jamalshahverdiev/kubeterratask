@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: jenkapp
+  labels:
+    app: jenkapp
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: jenkapp
+  template:
+    metadata:
+      name: jenkapp
+      labels: 
+         app: jenkapp
+    spec:
+      containers:
+      - name: jenkapp
+        image: jamalshahverdiev/jenkapp
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: jenkapp-service
+spec:
+  selector:
+    app: jenkapp
+  ports:
+    - port: 8080

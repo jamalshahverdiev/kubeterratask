@@ -49,6 +49,8 @@ $ kubectl create -f ngappingress.yaml
 
 `Note:` If you want use Tomcat app inside of the Kubernetes cluster, just execute `kubectl create -f tv8pod.yaml` and `kubectl create -f tv8appingress.yaml` commands. I have used DNS name `tv8appingress.loc`
 
+`Note:` If you want to deploy Jenkins to your cluster with the multiple POD replicas then you must configure GlusterFS or Ceph disk sharing between worker nodes. Otherwise DNS loadbalancer will balancer load between nodes and the Jenkins data will be different in the different worker nodes. That is why I have created POD (It is possible to define `NodeSelector`) and created A record to this POD with the DNS name `jenkappingress.loc`. Just execute `kubectl create -f jenkpod.yaml` and `kubectl create -f jenkappingress.yaml` commands and then open `jenkappingress.loc` DNS name in the web browser (Please look at the result in the end of this documentation).
+
 ##### Result must be like as the following:
 ```bash
 $ curl -XGET http://ngappingress.loc/
@@ -68,3 +70,5 @@ $ curl -s -XGET http://tv8appingress.loc/sample/ | head -n3 | tail -n1
 ![RESULT](images/ngapp.PNG)
 
 ![RESULT](images/tv8app.PNG)
+
+![RESULT](images/jenkapp.PNG)

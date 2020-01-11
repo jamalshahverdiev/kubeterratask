@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: jenkappingress.loc
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: jenkapp-service
+            servicePort: 8080
