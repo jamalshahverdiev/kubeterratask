@@ -1,3 +1,4 @@
+- [Prepare Jenkins docker image with `dummy` job](https://github.com/jamalshahverdiev/kubeterratask/tree/master/Jenkins)
 - [Prepare Tomcat docker image with app itself and use it](https://github.com/jamalshahverdiev/kubeterratask/tree/master/tomcat)
 - [Prepare Nginx docker image with app itself and use it](https://github.com/jamalshahverdiev/kubeterratask/tree/master/nginx)
 - [Use Kubernetes Yaml files to deploy our apps to the cluster via Nginx Ingress](https://github.com/jamalshahverdiev/kubeterratask/tree/master/kubefiles)
