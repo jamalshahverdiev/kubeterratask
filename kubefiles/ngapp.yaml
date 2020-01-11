@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ngapp
+  labels:
+    app: ngapp
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      app: ngapp
+  template:
+    metadata:
+      name: ngapp
+      labels: 
+         app: ngapp
+    spec:
+      containers:
+      - name: ngapp
+        image: jamalshahverdiev/ngapp
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: ngapp-service
+spec:
+  selector:
+    app: ngapp
+  ports:
+    - port: 80

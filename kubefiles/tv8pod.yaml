@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: tv8app
+  labels:
+    app: tv8app
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      app: tv8app
+  template:
+    metadata:
+      name: tv8app
+      labels: 
+         app: tv8app
+    spec:
+      containers:
+      - name: tv8app
+        image: jamalshahverdiev/tv8app
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: tv8app-service
+spec:
+  selector:
+    app: tv8app
+  ports:
+    - port: 8080
