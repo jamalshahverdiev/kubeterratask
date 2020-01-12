@@ -1,7 +1,11 @@
 #### Get list of the CentOS based AMIs with the following command:
 
 ```bash
-$ aws ec2 describe-images --owners aws-marketplace --filters Name=product-code,Values=aw0evgkw8e5c1q413zgy5pjce --query 'Images[*].[CreationDate,Name,ImageId]' --filters "Name=name,Values=CentOS Linux 7*" --region eu-west-1 --output table | sort -r
+$ aws ec2 describe-images --owners aws-marketplace \
+            --filters Name=product-code,Values=aw0evgkw8e5c1q413zgy5pjce \
+            --query 'Images[*].[CreationDate,Name,ImageId]' \
+            --filters "Name=name,Values=CentOS Linux 7*"  \
+            --region eu-west-1 --output table | sort -r
 ```
 
 #### Before start and deploy project into the AWS please generate `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` from `AWS IAM` console with the Administrator permissions. Then, copy output from console and change values inside of the `vars.tf` file for the  `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` variables. 
